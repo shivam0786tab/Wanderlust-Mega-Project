@@ -1,9 +1,9 @@
 @Library('Shared') _
 pipeline {
-    agent {label 'Node'}
+    agent {label 'ubuntu'}
     
     environment{
-        SONAR_HOME = tool "Sonar"
+        SONAR_HOME = tool "sonar"
     }
     
     parameters {
@@ -32,7 +32,7 @@ pipeline {
         stage('Git: Code Checkout') {
             steps {
                 script{
-                    code_checkout("https://github.com/LondheShubham153/Wanderlust-Mega-Project.git","main")
+                    code_checkout("https://github.com/shivam0786tab/Wanderlust-Mega-Project.git","main")
                 }
             }
         }
@@ -97,11 +97,11 @@ pipeline {
             steps{
                 script{
                         dir('backend'){
-                            docker_build("wanderlust-backend-beta","${params.BACKEND_DOCKER_TAG}","trainwithshubham")
+                            docker_build("test-repo","${params.BACKEND_DOCKER_TAG}","shiv0786")
                         }
                     
                         dir('frontend'){
-                            docker_build("wanderlust-frontend-beta","${params.FRONTEND_DOCKER_TAG}","trainwithshubham")
+                            docker_build("test-repo","${params.FRONTEND_DOCKER_TAG}","shiv0786")
                         }
                 }
             }
@@ -110,8 +110,8 @@ pipeline {
         stage("Docker: Push to DockerHub"){
             steps{
                 script{
-                    docker_push("wanderlust-backend-beta","${params.BACKEND_DOCKER_TAG}","trainwithshubham") 
-                    docker_push("wanderlust-frontend-beta","${params.FRONTEND_DOCKER_TAG}","trainwithshubham")
+                    docker_push("test-repo","${params.BACKEND_DOCKER_TAG}","shiv0786") 
+                    docker_push("test-repo","${params.FRONTEND_DOCKER_TAG}","shiv0786")
                 }
             }
         }
